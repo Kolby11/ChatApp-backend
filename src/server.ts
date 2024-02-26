@@ -8,6 +8,7 @@ import cors from 'cors'
 import { errorHandler } from './middleware/errorHandler'
 import { apiRouter } from './utils/apiRouter'
 import 'dotenv/config'
+import { mongo } from './utils/mongodb'
 
 // Environment variables
 const port = process.env.PORT
@@ -45,6 +46,8 @@ const io = new Server(server, {
     origin: '*',
   },
 })
+
+mongo.connect()
 
 io.on('connection', socket => {
   console.log('a user connected')
