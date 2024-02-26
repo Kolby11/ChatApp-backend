@@ -1,0 +1,13 @@
+{
+  "parser": "typescript",
+  "tabWidth": 2,
+  "printWidth": 120,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "arrowParens": "avoid",
+  "semi": false,
+  "plugins": [
+    "prettier-plugin-sql",
+    "prettier-plugin-embed"
+  ]
+}

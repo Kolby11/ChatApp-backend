@@ -1,0 +1,40 @@
+{
+  // Editor
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "editor.tabSize": 2,
+  "editor.indentSize": "tabSize",
+  
+  // Prettier
+  "prettier.printWidth": 120,
+  "prettier.useEditorConfig": true,
+
+  // Jest
+  "jest.runMode": "on-demand",
+
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma",
+  },
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "CookSmart database",
+      "database": "cooksmart",
+      "username": "postgres",
+      "password": "password"
+    }
+  ],
+  "compile-hero.disable-compile-files-on-did-save-code": true,
+}

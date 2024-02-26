@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "visualstudioexptteam.vscodeintellicode",
+    "searking.preview-vscode",
+    "oderwat.indent-rainbow",
+    "steoates.autoimport",
+    "yzhang.markdown-all-in-one",
+    "ms-vscode-remote.remote-containers",
+    "mermade.openapi-lint",
+    "mongodb.mongodb-vscode"
+  ]
+}
