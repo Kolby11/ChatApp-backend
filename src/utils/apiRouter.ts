@@ -1,2 +1,4 @@
+import { Router } from 'express'
+
 // API Router
-const apiRouter: Router = Router()
+export const apiRouter = Router()

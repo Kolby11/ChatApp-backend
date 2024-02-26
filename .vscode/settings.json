@@ -9,9 +9,6 @@
   "prettier.printWidth": 120,
   "prettier.useEditorConfig": true,
 
-  // Jest
-  "jest.runMode": "on-demand",
-
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
