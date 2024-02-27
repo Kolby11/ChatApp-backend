@@ -1,6 +1,5 @@
-import { randomUUID } from 'crypto'
-import { Usertypes } from './../../user/types'
-import { ChatAppDb, mongo } from '../../../utils/mongodb'
+import { ChatAppDb } from '../../../utils/mongodb'
+import { UserTypes } from '../../user/types'
 
 type Params = {
   username: string
@@ -9,7 +8,7 @@ type Params = {
 }
 
 export async function registerService(params: Params): Promise<Boolean> {
-  const data: Usertypes.CreateUser = { profileImageName: '', ...params }
+  const data: UserTypes.CreateUser = { profileImageName: '', ...params }
 
   const res = await ChatAppDb.collection('users').insertOne(data)
   return Boolean(res)

@@ -52,6 +52,11 @@ mongo.connect()
 io.on('connection', socket => {
   console.log('a user connected')
 
+  socket.on('start-call', (chatId, userId) => {
+    console.log(chatId, userId)
+    io.emit('testik')
+  })
+
   socket.on('message', message => {
     console.log('message: ', message)
     io.emit('message', message)
