@@ -1,5 +1,7 @@
 import { ChatAppDb } from '../../../utils/mongodb'
 import { UserTypes } from '../../user/types'
+import { UserUtils } from '../../user/userUtils'
+import { AuthUtils } from '../authUtils'
 
 type Params = {
   username: string
@@ -7,8 +9,21 @@ type Params = {
   password: string
 }
 
-export async function registerService(params: Params): Promise<Boolean> {
-  const data: UserTypes.CreateUser = { profileImageName: '', ...params }
+export async function registerService(params: Params): Promise<boolean> {
+  const { username, email, password } = params
+
+  const hashedPassword = await AuthUtils.hashPassword(password)
+
+  const data: UserTypes.CreateUser = {
+    username,
+    email,
+    password: hashedPassword,
+    profileImageName: '',
+    refreshToken: '',
+  }
+
+  const isUnique = await UserUtils.isUserDataUnique(username, email)
+  console.log('isUnique', isUnique)
 
   const res = await ChatAppDb.collection('users').insertOne(data)
   return Boolean(res)

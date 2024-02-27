@@ -41,7 +41,21 @@ export async function loginController(req: Request, res: Response, next: NextFun
       return res.status(401).json({ message: 'Login unsuccessful' })
     }
 
-    return res.status(200).json({ message: 'Login successful' })
+    res.cookie('refreshToken', verified.refreshToken, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      sameSite: 'none',
+      secure: false,
+    })
+
+    res.cookie('accessToken', verified.accessToken, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      sameSite: 'none',
+      secure: false,
+    })
+
+    return res.status(200).json({ message: 'Login successful', accessToken: verified.accessToken })
   } catch (err) {
     next(err)
   }

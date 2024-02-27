@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express'
-import { Usertypes } from '../../user/types'
 import { AuthUtils } from '../authUtils'
 import { z } from 'zod'
 import { registerService } from './registerService'
