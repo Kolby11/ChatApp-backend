@@ -41,7 +41,7 @@ export namespace AuthUtils {
       _id: userId,
     })
     if (!user) throw new UserTypes.UserNotFoundError(`User with id: '${userId}' not found`)
-    return jwt.sign({ userId: user.id }, accessTokenSecret, { expiresIn: '1d' })
+    return jwt.sign({ userId: user._id.toString() }, accessTokenSecret, { expiresIn: '1d' })
   }
 
   /** Generate refresh token */
@@ -50,7 +50,7 @@ export namespace AuthUtils {
       _id: userId,
     })
     if (!user) throw new UserTypes.UserNotFoundError(`User with id: '${userId}' not found`)
-    const refreshToken = jwt.sign({ userId: user.id }, refreshTokenSecret, { expiresIn: '7d' })
+    const refreshToken = jwt.sign({ userId: user._id.toString() }, refreshTokenSecret, { expiresIn: '7d' })
 
     return refreshToken
   }

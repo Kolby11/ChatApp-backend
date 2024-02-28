@@ -1,9 +1,11 @@
 import 'dotenv/config'
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
+import { ObjectId } from 'mongodb'
+import { decode } from 'punycode'
 
 export type RequestWithUser = Request & {
-  userId?: string
+  userId?: ObjectId
 }
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET ? process.env.ACCESS_TOKEN_SECRET : ''
@@ -32,9 +34,9 @@ export async function verifyJWT(req: RequestWithUser, res: Response, next: NextF
     }
     if (!decoded) {
       throw new Error()
-    }
-
-    req.userId = decoded.userId
+    }    
+    console.log(decoded)
+    console.log("ss:",req.body.userId = decoded.userId)
     next()
   })
 }
@@ -64,8 +66,7 @@ export async function verifyOptionalJWT(req: RequestWithUser, res: Response, nex
     if (!decoded) {
       throw new Error()
     }
-
-    req.userId = decoded.userId
+    req.body.userId = decoded.userId
     next()
   })
 }
