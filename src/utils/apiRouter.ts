@@ -1,11 +1,11 @@
 import { Router } from 'express'
 import { authRouter } from '../api/auth/authRoutes'
-import { groupchatRouter } from '../api/groupChat/groupchatRouter'
 import { userRouter } from '../api/user/userRoutes'
+import { chatRouter } from '../api/auth/chat/chatRouter'
 
 // API Router
 export const apiRouter = Router()
 
 apiRouter.use('/auth', authRouter)
-apiRouter.use('/groupchat', groupchatRouter)
-apiRouter.use('/user',userRouter)
+apiRouter.use('/chat', chatRouter)
+apiRouter.use('/user', userRouter)

@@ -1,20 +1,23 @@
-import { ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb'
 import { ChatAppDb } from '../../../utils/mongodb'
 
 type Params = {
-  userId: ObjectId
+  userId: string
 }
 
 export async function currentUserService(params: Params): Promise<any> {
   const { userId } = params
-  const user = await ChatAppDb.collection("users").findOne({
-    _id: new ObjectId(userId)
+
+  const userObjectId = new ObjectId(userId)
+
+  const user = await ChatAppDb.collection('users').findOne({
+    _id: userObjectId,
   })
-  
+
   if (!user) {
     return null
   }
 
-  const {password,...userWithoutPass} = user
+  const { password, ...userWithoutPass } = user
   return userWithoutPass
 }

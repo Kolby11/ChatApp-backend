@@ -46,14 +46,12 @@ export async function loginController(req: Request, res: Response, next: NextFun
     res.cookie('refreshToken', verified.refreshToken, {
       httpOnly: true,
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      sameSite: 'none',
       secure: false,
     })
 
     res.cookie('accessToken', verified.accessToken, {
       httpOnly: true,
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      sameSite: 'none',
       secure: false,
     })
 

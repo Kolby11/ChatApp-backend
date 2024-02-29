@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from 'express'
 import { ZodError } from 'zod'
 import { UserTypes } from '../api/user/types'
+import { ChatTypes } from '../api/auth/chat/types'
 
 export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
   if (err instanceof ZodError) {
     return res.status(400).json({ message: err.flatten() })
+  } else if (err instanceof ChatTypes.ChatNotFoundError) {
+    return res.status(404).json({ message: err.message })
   } else if (err instanceof UserTypes.UserConflictError) {
     return res.status(409).json({ message: err.message })
   } else {

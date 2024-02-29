@@ -1,10 +1,12 @@
-import { Request, Response, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
 import { z } from 'zod'
-import { createGroupchatService } from './createGroupchatService'
+import { createChatService } from './createChatService'
+import { RequestWithUserId } from '../../../../middleware/verifyJWT'
 
-export async function createGroupchatController(req: Request, res: Response, next: NextFunction) {
+export async function createChatController(req: RequestWithUserId, res: Response, next: NextFunction) {
   try {
     const RequestSchema = z.object({
+      userId: z.string(),
       body: z.object({
         name: z.string().min(1).max(32),
         userIds: z.array(z.string()).or(
@@ -28,7 +30,7 @@ export async function createGroupchatController(req: Request, res: Response, nex
       userIds,
     }
 
-    const createdGroupchatId = await createGroupchatService(params)
+    const createdGroupchatId = await createChatService(params)
 
     if (!createdGroupchatId) {
       return res.status(409).json({ message: 'Failed created groupchat' })

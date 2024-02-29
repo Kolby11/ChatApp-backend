@@ -1,10 +1,12 @@
-import { Request, Response, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
 import { z } from 'zod'
-import { addUsersToGroupchatService } from './addUsersToGroupchatService'
+import { addUsersToChatService } from './addUsersToService'
+import { RequestWithUserId } from '../../../../middleware/verifyJWT'
 
-export async function addUsersToGroupchatController(req: Request, res: Response, next: NextFunction) {
+export async function addUsersToChatController(req: RequestWithUserId, res: Response, next: NextFunction) {
   try {
     const RequestSchema = z.object({
+      userId: z.string(),
       params: z.object({
         groupchatId: z.string().uuid({ message: 'Invalid groupchat id format' }),
       }),
@@ -23,15 +25,17 @@ export async function addUsersToGroupchatController(req: Request, res: Response,
     })
 
     const validatedData = RequestSchema.parse(req)
+    const { userId } = validatedData
     const { groupchatId } = validatedData.params
     const { userIds } = validatedData.body
 
     const params = {
+      userId,
       groupchatId,
       userIds,
     }
 
-    const addedUsersToGroupchat = await addUsersToGroupchatService(params)
+    const addedUsersToGroupchat = await addUsersToChatService(params)
 
     if (!addedUsersToGroupchat) {
       return res.status(409).json({ message: 'Failed adding users to groupchat' })

@@ -1,16 +1,14 @@
 import 'dotenv/config'
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-import { ObjectId } from 'mongodb'
-import { decode } from 'punycode'
 
-export type RequestWithUser = Request & {
-  userId?: ObjectId
+export type RequestWithUserId = Request & {
+  userId?: string
 }
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET ? process.env.ACCESS_TOKEN_SECRET : ''
 
-export async function verifyJWT(req: RequestWithUser, res: Response, next: NextFunction) {
+export async function verifyJWT(req: RequestWithUserId, res: Response, next: NextFunction) {
   const authHeader = req.headers['authorization']
   const accessTokenCookie = req.cookies.accessToken
 
@@ -21,7 +19,7 @@ export async function verifyJWT(req: RequestWithUser, res: Response, next: NextF
   } else if (accessTokenCookie) {
     token = accessTokenCookie
   } else {
-    return res.sendStatus(404)
+    return res.sendStatus(403)
   }
 
   jwt.verify(token, accessTokenSecret, (err, decoded) => {
@@ -34,14 +32,13 @@ export async function verifyJWT(req: RequestWithUser, res: Response, next: NextF
     }
     if (!decoded) {
       throw new Error()
-    }    
-    console.log(decoded)
-    console.log("ss:",req.body.userId = decoded.userId)
+    }
+    req.userId = decoded.userId
     next()
   })
 }
 
-export async function verifyOptionalJWT(req: RequestWithUser, res: Response, next: NextFunction) {
+export async function verifyOptionalJWT(req: RequestWithUserId, res: Response, next: NextFunction) {
   const authHeader = req.headers['authorization']
   const accessTokenCookie = req.cookies.accessToken
 
@@ -66,7 +63,7 @@ export async function verifyOptionalJWT(req: RequestWithUser, res: Response, nex
     if (!decoded) {
       throw new Error()
     }
-    req.body.userId = decoded.userId
+    req.userId = decoded.userId
     next()
   })
 }

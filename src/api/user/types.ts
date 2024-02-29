@@ -1,6 +1,6 @@
 export namespace UserTypes {
   export type User = {
-    id: string
+    _id: string
     username: string
     email: string
     password: string
@@ -9,7 +9,7 @@ export namespace UserTypes {
   }
   export type UserPublic = Omit<User, 'password' | 'refreshToken'>
 
-  export type CreateUser = Omit<User, 'id'>
+  export type CreateUser = Omit<User, '_id'>
 
   // Errors
   export class UserNotFoundError extends Error {
