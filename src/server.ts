@@ -9,6 +9,7 @@ import { errorHandler } from './middleware/errorHandler'
 import { apiRouter } from './utils/apiRouter'
 import 'dotenv/config'
 import { mongo } from './utils/mongodb'
+import { setupSocketListeners } from './utils/socketSetup'
 
 // Environment variables
 const port = process.env.PORT
@@ -49,23 +50,7 @@ const io = new Server(server, {
 
 mongo.connect()
 
-io.on('connection', socket => {
-  console.log('a user connected')
-
-  socket.on('start-call', (chatId, userId) => {
-    console.log(chatId, userId)
-    io.emit('testik')
-  })
-
-  socket.on('message', message => {
-    console.log('message: ', message)
-    io.emit('message', message)
-  })
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected')
-  })
-})
+setupSocketListeners(io)
 
 server.listen(port, () => {
   console.log(`Server listening on http://${host}:${port}`)

@@ -23,7 +23,6 @@ export async function registerService(params: Params): Promise<boolean> {
   }
 
   const isUnique = await UserUtils.isUserDataUnique(username, email)
-  console.log('isUnique', isUnique)
 
   const res = await ChatAppDb.collection('users').insertOne(data)
   return Boolean(res)

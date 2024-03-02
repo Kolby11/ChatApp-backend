@@ -5,8 +5,6 @@ import { loginService } from './loginService'
 
 export async function loginController(req: Request, res: Response, next: NextFunction) {
   try {
-    console.log(req.body)
-
     const RequestSchema = z.object({
       usernameOrEmail: z
         .string({ required_error: 'Username or Email is required' })

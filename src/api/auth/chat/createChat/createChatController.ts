@@ -24,10 +24,11 @@ export async function createChatController(req: RequestWithUserId, res: Response
 
     const validatedData = RequestSchema.parse(req)
     const { name, userIds } = validatedData.body
+    const { userId } = validatedData
 
     const params = {
       name,
-      userIds,
+      userIds: [...userIds, userId],
     }
 
     const createdGroupchatId = await createChatService(params)

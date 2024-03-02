@@ -1,9 +1,10 @@
-import { Request, Response, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
 import { currentUserService } from './currentUserService'
+import { RequestWithUserId } from '../../../middleware/verifyJWT'
 
-export async function currentUserController(req: Request, res: Response, next: NextFunction) {
+export async function currentUserController(req: RequestWithUserId, res: Response, next: NextFunction) {
   try {
-    const userId = req.body.userId
+    const userId = req.userId
 
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' })
