@@ -36,7 +36,7 @@ export async function onSendMessage(socket: Socket, params: Params) {
     const notifyUserIds = chatDetails.userIds.filter(id => id !== params.userId)
 
     notifyUserIds.forEach(id => {
-      userSockets[id] && socket.to(userSockets[id]).emit('message', chatDetails)
+      userSockets[id] && socket.to(userSockets[id]).emit('messageReceived', JSON.stringify(chatDetails))
     })
   } catch (err) {
     if (err instanceof Error) {

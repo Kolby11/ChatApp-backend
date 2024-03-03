@@ -47,5 +47,11 @@ export async function sendMessageService(props: Props) {
     { returnDocument: 'after' }
   )
 
-  return updatedChat
+  if (!updatedChat) {
+    throw new Error('Chat not found')
+  }
+
+  const parsedChat = { ...updatedChat, _id: updatedChat._id.toString() }
+
+  return parsedChat
 }

@@ -91,7 +91,7 @@ export namespace AuthUtils {
 
         const decodedToken: AccessToken = decoded as AccessToken
 
-        if (foundUser.id !== decodedToken.userId) {
+        if (foundUser._id.toString() !== decodedToken.userId) {
           return resolve(null)
         }
 
