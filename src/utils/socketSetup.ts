@@ -38,14 +38,15 @@ export function setupSocketListeners(io: Server) {
       })
     })
 
-    socket.on('sendMessage', data => {
+    socket.on('messageSend', data => {
       data = JSON.parse(data)
+      console.log('messageSend', data)
       onSendMessage(socket, { ...data, userId: socket.data.user.userId })
     })
 
-    socket.on('start-call', data => {
-      console.log('start-call', data)
-      io.to(userSockets[data.receiverId]).emit('start-call', data)
+    socket.on('callStart', data => {
+      console.log('callStart', data)
+      io.to(userSockets[data.receiverId]).emit('callStart', data)
     })
   })
 }

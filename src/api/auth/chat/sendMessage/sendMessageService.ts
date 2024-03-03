@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { ChatAppDb } from '../../../../utils/mongodb'
+import { UserTypes } from '../../../user/types'
 
 type Props = {
   userId: string
@@ -10,7 +11,10 @@ type Props = {
 interface ChatDocument {
   _id: ObjectId
   messages: {
-    userId: string
+    user: {
+      userId: string
+      username: string
+    }
     message: string
     createdAt: Date
   }[]
@@ -20,8 +24,17 @@ interface ChatDocument {
 export async function sendMessageService(props: Props) {
   const { userId, chatId, message } = props
 
+  const user = await ChatAppDb.collection('users').findOne({ _id: new ObjectId(userId) })
+
+  if (!user) {
+    throw new UserTypes.UserNotFoundError('User not found')
+  }
+
   const messageObj = {
-    userId,
+    user: {
+      userId,
+      username: user.username,
+    },
     message,
     createdAt: new Date(),
   }

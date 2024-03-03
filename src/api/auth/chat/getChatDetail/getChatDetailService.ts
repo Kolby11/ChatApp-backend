@@ -14,7 +14,7 @@ export const getChatDetailService = async (props: Props) => {
 
   const chat = await ChatAppDb.collection('chats').findOne({
     _id: objectId,
-    users: { $in: [userId] },
+    userIds: { $in: [userId] },
   })
 
   if (!chat) {
